@@ -16,7 +16,7 @@ export default function EvidenceTable({ evidence }) {
           size={14}
           className={`transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
         />
-        Evidence — {evidence.length} source{evidence.length !== 1 ? "s" : ""}
+        Evidence, {evidence.length} source{evidence.length !== 1 ? "s" : ""}
       </button>
 
       {expanded && (

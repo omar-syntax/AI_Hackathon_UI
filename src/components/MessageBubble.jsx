@@ -45,7 +45,7 @@ export default function MessageBubble({ message }) {
             className={`px-4 py-3 ${
               isUser
                 ? "bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)]"
-                : "bg-white border border-[var(--color-border)] text-[var(--color-text-primary)] shadow-[var(--shadow-sm)]"
+                : "bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] border border-[var(--color-border)] shadow-[var(--shadow-sm)]"
             } ${
               isUser
                 ? "rounded-[18px_18px_4px_18px]"
