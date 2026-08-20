@@ -1,15 +1,19 @@
 import { useState, useRef, useCallback } from "react";
 import { Send } from "lucide-react";
 
+const SINGLE_LINE_HEIGHT = 40;
+
 export default function ChatInput({ onSend, hasStarted, isLoading }) {
   const [text, setText] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
   const textareaRef = useRef(null);
 
   const handleInput = useCallback((e) => {
     setText(e.target.value);
     const el = e.target;
     el.style.height = "auto";
-    el.style.height = Math.min(el.scrollHeight, 120) + "px";
+    el.style.height = el.scrollHeight + "px";
+    setIsExpanded(el.scrollHeight > SINGLE_LINE_HEIGHT);
   }, []);
 
   const handleSubmit = (e) => {
@@ -18,6 +22,7 @@ export default function ChatInput({ onSend, hasStarted, isLoading }) {
     if (!trimmed || isLoading) return;
     onSend(trimmed);
     setText("");
+    setIsExpanded(false);
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
     }
@@ -38,12 +43,12 @@ export default function ChatInput({ onSend, hasStarted, isLoading }) {
           : "flex items-center justify-center min-h-screen"
       }`}
     >
-      <div className="w-[50%] min-w-[400px] mx-auto">
+      <div className="w-full max-w-[600px] px-4 mx-auto">
         {!hasStarted && (
           <div className="flex flex-col items-center gap-4 mb-6">
             <h1 className="text-5xl font-bold tracking-tight">
-              <span style={{ color: "#164B73" }}>EPILEPSIES </span>
-              <span style={{ color: "#398DAF" }}>AI</span>
+              <span className="text-[var(--color-accent-dark)]">EPILEPSIES </span>
+              <span className="text-[var(--color-accent)]">AI</span>
             </h1>
             <div className="animate-float flex justify-center w-full">
               <img src="/logo.png" alt="Logo" className="w-[43%] max-w-md h-auto" />
@@ -56,7 +61,7 @@ export default function ChatInput({ onSend, hasStarted, isLoading }) {
 
         <form
           onSubmit={handleSubmit}
-          className="flex items-center gap-1 rounded-full border border-[var(--color-border)] bg-white shadow-[var(--shadow-sm)] px-2 py-1.5 focus-within:ring-2 focus-within:ring-[var(--color-accent)] focus-within:border-transparent transition-shadow"
+          className={`flex ${isExpanded ? "flex-col rounded-2xl" : "items-end rounded-full"} gap-1 border border-white/10 bg-[var(--color-bg-tertiary)] shadow-[var(--shadow-md)] px-2 py-1.5 focus-within:ring-2 focus-within:ring-[var(--color-accent)] focus-within:border-transparent transition-all duration-200`}
         >
           <textarea
             ref={textareaRef}
@@ -66,13 +71,14 @@ export default function ChatInput({ onSend, hasStarted, isLoading }) {
             onKeyDown={handleKeyDown}
             disabled={isLoading}
             placeholder={isLoading ? "Waiting for response..." : "Ask a medical question..."}
-            className="flex-1 resize-none px-2 py-2 bg-transparent text-[15px] leading-snug text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none max-h-[120px] overflow-y-auto disabled:opacity-50"
+            className="flex-1 resize-none pl-2 pr-3 py-2 bg-transparent text-[15px] leading-snug text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none min-h-[40px] max-h-[160px] overflow-y-auto disabled:opacity-50 chat-input-scrollbar"
           />
 
+          {isExpanded && <div className="flex-1" />}
           <button
             type="submit"
             disabled={!text.trim() || isLoading}
-            className="flex-shrink-0 p-2.5 rounded-full bg-[var(--color-accent)] text-white hover:bg-[#0f3a5c] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex-shrink-0 p-2.5 rounded-full bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-light)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             aria-label="Send message"
           >
             <Send size={18} />

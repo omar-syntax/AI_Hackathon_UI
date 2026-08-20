@@ -483,6 +483,16 @@ body {
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* ═══════════════════════════════════════════
+   CHAT INPUT TEXTAREA SCROLLBAR
+   ═══════════════════════════════════════════ */
+
+.chat-input-scrollbar::-webkit-scrollbar { width: 4px; }
+.chat-input-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.chat-input-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+.chat-input-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+.chat-input-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+
+/* ═══════════════════════════════════════════
    EDITORIAL GRID SECTION
    ═══════════════════════════════════════════ */
 

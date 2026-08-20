@@ -1,4 +1,4 @@
-import { FileText, MessageSquare } from "lucide-react";
+import { FileText, MessageSquare, X } from "lucide-react";
 
 const mockSessions = [
   { id: 1, title: "ACE Inhibitor Guidelines", type: "chat", date: "2 min ago" },
@@ -23,15 +23,22 @@ export default function Sidebar({ isOpen, onClose }) {
       )}
 
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white border-l border-[var(--color-border)] shadow-[var(--shadow-md)] z-50 transform transition-transform duration-250 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-80 bg-[var(--color-bg-secondary)] border-l border-white/[0.08] shadow-[var(--shadow-lg)] z-50 transform transition-transform duration-250 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="p-4 border-b border-[var(--color-border)]">
-            <h2 className="text-[15px] font-semibold text-[var(--color-text-primary)]">
+          <div className="p-4 border-b border-white/[0.08] flex items-center justify-between">
+            <h2 className="text-[15px] font-semibold text-white">
               History
             </h2>
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-white hover:bg-white/[0.06] transition-colors"
+              aria-label="Close sidebar"
+            >
+              <X size={16} />
+            </button>
           </div>
 
           <div className="flex-1 overflow-y-auto">
@@ -63,7 +70,7 @@ export default function Sidebar({ isOpen, onClose }) {
               </div>
             </div>
 
-            <div className="p-3 border-t border-[var(--color-border)]">
+            <div className="p-3 border-t border-white/[0.08]">
               <h3 className="text-[11px] font-semibold uppercase tracking-wider text-[var(--color-text-muted)] px-2 mb-2">
                 Uploaded Files
               </h3>
